@@ -11,8 +11,10 @@ Opt-in mode for candidates who already maintain a hand-tuned `.tex` CV. **Does n
 
 | Family | Detection | Editable prose |
 |--------|-----------|----------------|
-| `resumeSubheading` | `\resumeSubheading` + `\resumeItem` | `\resumeItem{...}` bullets; `\textbf{Category}{: items}` skill values |
+| `resumeSubheading` | `\resumeSubheading` + `\resumeItem`/`\resumeItemWithoutTitle`/`\resumeSubItem` | `\resumeItem{...}` and `\resumeItemWithoutTitle{}{...}` bullets; `\textbf{Category}{: items}` and `\resumeSubItem{Category}{items}` skill values |
 | `tabularx-itemize` | `tabularx` + `itemize`, no resume macros | `\item` body text in the document body |
+
+Extraction only reads the document body (preamble macro definitions are skipped) and ignores commented-out macro calls — old bullets kept as `%` comments never become editable slots.
 
 Any other layout → stop with the script error and suggest `/career-ops latex` (cv.md → career-ops template).
 
@@ -56,7 +58,7 @@ latex:
 8. Run: `node generate-latex.mjs output/cv-{candidate}-{company}-{YYYY-MM-DD}.tex output/cv-{candidate}-{company}-{YYYY-MM-DD}.pdf --compile-only`
 9. Report: family, slot count, patched count, `.tex` path, `.pdf` path (or compile error)
 
-**Requires:** `tectonic` or `pdflatex` on PATH (same as `latex` mode).
+**Requires:** `tectonic` or `pdflatex` (same as `latex` mode). If step 8's report carries `installHint`, follow the "No engine installed?" step in `modes/latex.md` — ask first, then `node install-latex-engine.mjs` and retry.
 
 ## Ethical rules (mandatory)
 
